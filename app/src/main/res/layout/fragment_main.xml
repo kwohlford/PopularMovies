@@ -5,10 +5,10 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.popularmovies.MainActivityFragment"
+    tools:context="com.example.android.popularmovies.activity.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
-    <com.example.android.popularmovies.MovieGridView
+    <com.example.android.popularmovies.ui.MovieGridView
         android:id="@+id/gridview_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
