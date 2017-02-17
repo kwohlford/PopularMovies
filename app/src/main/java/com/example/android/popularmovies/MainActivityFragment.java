@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.example.android.popularmovies.api.MovieDetails;
 import com.example.android.popularmovies.api.TmdbUtils;
@@ -28,7 +27,7 @@ public class MainActivityFragment extends Fragment {
 
     private static final String[] PLACEHOLDER_MOVIE_IDS =  {"283995", "271110", "246655"};
 
-    private GridView movieGridView;
+    private MovieGridView movieGridView;
     private MovieGridAdapter movieGridAdapter;
 
     public MainActivityFragment() {
@@ -43,7 +42,7 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        movieGridView = (GridView) rootView.findViewById(R.id.gridview_movies);
+        movieGridView = (MovieGridView) rootView.findViewById(R.id.gridview_movies);
 
         loadMovieDetails(PLACEHOLDER_MOVIE_IDS);
 
