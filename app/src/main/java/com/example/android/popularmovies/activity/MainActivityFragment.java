@@ -4,6 +4,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,15 +29,33 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_movie_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menuSortPopular) {
+            loadMovieDetails(TmdbUtils.buildPopularMovieListRequestUri(1));
+            return true;
+        }
+        if (id == R.id.menuSortTopRated) {
+            loadMovieDetails(TmdbUtils.buildTopRatedMovieListRequestUri(1));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         movieGridView = (MovieGridView) rootView.findViewById(R.id.gridview_movies);
-        loadMovieDetails();
+        loadMovieDetails(TmdbUtils.buildPopularMovieListRequestUri(1));
         return rootView;
     }
 
-    private void loadMovieDetails() {
-        final Uri requestUri = TmdbUtils.buildPopularMovieListRequestUri(1);
+    private void loadMovieDetails(final Uri requestUri) {
         final TmdbLoadMoviesTask tmdbLoadMoviesTask = new TmdbLoadMoviesTask(movieGridView, getActivity());
         tmdbLoadMoviesTask.execute(requestUri);
     }
