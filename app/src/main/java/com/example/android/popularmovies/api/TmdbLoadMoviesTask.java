@@ -19,7 +19,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Task for loading details for a list of movies from TMDB.
+ */
 public class TmdbLoadMoviesTask extends AsyncTask<Uri, Void, List<MovieDetails>> {
 
     private final String LOG_TAG = TmdbLoadMoviesTask.class.getSimpleName();
@@ -42,14 +44,12 @@ public class TmdbLoadMoviesTask extends AsyncTask<Uri, Void, List<MovieDetails>>
 
     @Override
     protected List<MovieDetails> doInBackground(final Uri... params) {
-        final List<MovieDetails> loadedMovies = new ArrayList<>();
-
-        for (final Uri param : params) {
-            final String jsonResult = executeRequest(param);
-            loadedMovies.add(new MovieDetails(jsonResult));
+        if (params.length == 0) {
+            return new ArrayList<>();
         }
 
-        return loadedMovies;
+        final String jsonResult = executeRequest(params[0]);
+        return TmdbUtils.parseMovieDetailsListFromJson(jsonResult);
     }
 
     @Override

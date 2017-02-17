@@ -10,15 +10,11 @@ import android.view.ViewGroup;
 import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.api.TmdbLoadMoviesTask;
 import com.example.android.popularmovies.api.TmdbUtils;
-import com.example.android.popularmovies.ui.MovieGridAdapter;
 import com.example.android.popularmovies.ui.MovieGridView;
 
 public class MainActivityFragment extends Fragment {
 
-    private static final String[] PLACEHOLDER_MOVIE_IDS =  {"283995", "271110", "246655"};
-
     private MovieGridView movieGridView;
-    private MovieGridAdapter movieGridAdapter;
 
     public MainActivityFragment() {
     }
@@ -33,19 +29,14 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         movieGridView = (MovieGridView) rootView.findViewById(R.id.gridview_movies);
-
-        loadMovieDetails(PLACEHOLDER_MOVIE_IDS);
-
+        loadMovieDetails();
         return rootView;
     }
 
-    private void loadMovieDetails(final String[] movieIds) {
-        final Uri[] movieUris = new Uri[movieIds.length];
-        for (int i = 0; i < movieUris.length; i++) {
-            movieUris[i] = TmdbUtils.buildMovieDetailsRequestUri(movieIds[i]);
-        }
+    private void loadMovieDetails() {
+        final Uri requestUri = TmdbUtils.buildPopularMovieListRequestUri(1);
         final TmdbLoadMoviesTask tmdbLoadMoviesTask = new TmdbLoadMoviesTask(movieGridView, getActivity());
-        tmdbLoadMoviesTask.execute(movieUris);
+        tmdbLoadMoviesTask.execute(requestUri);
     }
 
 }
